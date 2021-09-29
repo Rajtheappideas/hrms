@@ -133,9 +133,9 @@ class SideBar extends Component {
                            <Link to="/">Dashboard</Link>
                         </li>
                         <li>
-                           <Link to="analytics">Analytics</Link>
+                           <Link to="reports">Send Daily Reports</Link>
                         </li>
-						<li>
+						{/* <li>
                            <Link to="review">Review</Link>
                         </li>
 						<li>
@@ -146,10 +146,10 @@ class SideBar extends Component {
                         </li>
 						<li>
                            <Link to="customer-list">Customer List</Link>
-                        </li>
+                        </li> */}
                      </ul>
                   </li>
-                  <li
+                  {/* <li
                      className={`${
                         app.includes(path.slice(1)) ? "mm-active" : ""
                      }`}
@@ -228,7 +228,8 @@ class SideBar extends Component {
                         </li>
                      </ul>
                   </li>
-                  <li
+                 */}
+                  {/* <li
                      className={`${
                         charts.includes(path.slice(1)) ? "mm-active" : ""
                      }`}
@@ -262,7 +263,8 @@ class SideBar extends Component {
                         </li>
                      </ul>
                   </li>
-                  <li
+                 */}
+                  {/* <li
                      className={`${
                         bootstrap.includes(path.slice(1)) ? "mm-active" : ""
                      }`}
@@ -329,7 +331,8 @@ class SideBar extends Component {
                         </li>
                      </ul>
                   </li>
-                  <li
+                   */}
+                  {/* <li
                      className={`${
                         plugins.includes(path.slice(1)) ? "mm-active" : ""
                      }`}
@@ -363,7 +366,8 @@ class SideBar extends Component {
                         </li>
                      </ul>
                   </li>
-                  <li
+                   */}
+                  {/* <li
                      className={`${
                         widget.includes(path.slice(1)) ? "mm-active" : ""
                      }`}
@@ -377,7 +381,8 @@ class SideBar extends Component {
                         <span className="nav-text">Widget</span>
                      </Link>
                   </li>
-                  <li
+                 */}
+                  {/* <li
                      className={`${
                         forms.includes(path.slice(1)) ? "mm-active" : ""
                      }`}
@@ -410,6 +415,7 @@ class SideBar extends Component {
                         </li>
                      </ul>
                   </li>
+                  */}
                   <li
                      className={`${
                         table.includes(path.slice(1)) ? "mm-active" : ""
@@ -432,6 +438,7 @@ class SideBar extends Component {
                         </li>
                      </ul>
                   </li>
+                
                   <li>
                      <Link
                         className="has-arrow ai-icon"
@@ -439,7 +446,7 @@ class SideBar extends Component {
                         
                      >
                         <i className="flaticon-381-layer-1"></i>
-                        <span className="nav-text">Pages</span>
+                        <span className="nav-text">Authentication</span>
                      </Link>
                      <ul >
                         <li>
@@ -448,7 +455,7 @@ class SideBar extends Component {
                         <li>
                            <Link to="/page-login">Login</Link>
                         </li>
-                        <li>
+                        {/* <li>
                            <Link
                               className="has-arrow"
                               to="#"
@@ -474,9 +481,11 @@ class SideBar extends Component {
                               </li>
                            </ul>
                         </li>
+                       
                         <li>
                            <Link to="/page-lock-screen">Lock Screen</Link>
                         </li>
+                     */}
                      </ul>
                   </li>
                </MM>

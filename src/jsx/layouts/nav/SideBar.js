@@ -48,6 +48,7 @@ class SideBar extends Component {
       /// Active menu
       let deshBoard = [
             "",
+            "reports",
             "analytics",
             "companies",
             "statistics",
@@ -489,7 +490,7 @@ class SideBar extends Component {
                      </ul>
                   </li>
                </MM>
-				<div className="plus-box">
+				{/* <div className="plus-box">
 					<p className="fs-13 font-w300 mb-4">Organize your menus through button bellow</p>
 					<Link className="btn bg-white text-black btn-rounded d-block" to="#">+Add Menus</Link>
 				</div>
@@ -498,7 +499,7 @@ class SideBar extends Component {
                      <strong>Koki Restaurant React Dashboard</strong> ©All Rights Reserved
                   </p>
                   <p>by DexignZone</p>
-               </div>
+               </div> */}
             </PerfectScrollbar>
          </div>
       );

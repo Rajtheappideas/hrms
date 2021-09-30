@@ -66,7 +66,8 @@ const Header = ({ onNote, toggle, onProfile, onActivity, onNotification}) => {
                            </div>
                         </div> */}
                      </li>
-					 <li className="nav-item dropdown notification_dropdown">
+                     {/* -----------------------------notifications menus-------------------------------- */}
+					 {/* <li className="nav-item dropdown notification_dropdown">
                         <Link to ={"#"}
                            className="nav-link  ai-icon"
                            role="button"
@@ -198,7 +199,9 @@ const Header = ({ onNote, toggle, onProfile, onActivity, onNotification}) => {
                            </Link>
                         </div>
                      </li>
-                     <li className="nav-item dropdown notification_dropdown">
+                   */}
+                   {/* ----------------------------------chats notification------------------ */}
+                     {/* <li className="nav-item dropdown notification_dropdown">
                         <Link to={"#"}
                            className="nav-link bell bell-link"
                            onClick={() => onNote()}
@@ -286,6 +289,8 @@ const Header = ({ onNote, toggle, onProfile, onActivity, onNotification}) => {
                            
                         </div>
                      </li>
+                     */}
+                     {/* ------------------profile dropdown----------- */}
                      <li
                         className={`nav-item dropdown header-profile ${
                            toggle === "profile" ? "show" : ""
@@ -298,7 +303,7 @@ const Header = ({ onNote, toggle, onProfile, onActivity, onNotification}) => {
                            data-toggle="dropdown"
                         >
                            <div className="header-info">
-								<small>Good Morning</small>
+								{/* <small>Good Morning</small> */}
 								<span>James Sullivan</span>
                            </div>
                            <img src={profile} width="20" alt="" />
@@ -355,6 +360,7 @@ const Header = ({ onNote, toggle, onProfile, onActivity, onNotification}) => {
                            <Link
                               to="/page-login"
                               className="dropdown-item ai-icon"
+                              onClick={() => localStorage.removeItem("token")} 
                            >
                               <svg
                                  id="icon-logout"

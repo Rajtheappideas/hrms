@@ -13,7 +13,6 @@ import Profile from "../components/Dashboard/Profile/Profile";
 import Companies from "../components/Dashboard/Companies/Companies";
 import Statistics from "../components/Dashboard/Statistics/Statistics";
 import SearchJobs from "../components/Dashboard/SearchJobs/SearchJobs";
-
 /// Bo
 import UiAlert from "../components/bootstrap/Alert";
 import UiAccordion from "../components/bootstrap/Accordion";
@@ -80,100 +79,106 @@ import Toastr from "../components/PluginsMenu/Toastr/Toastr";
 import JqvMap from "../components/PluginsMenu/Jqv Map/JqvMap";
 import RechartJs from "../components/charts/rechart";
 
+import Developer from "../../user/reports/Developer/Developer";
+// import Reports from '../pages/Reports'
 const Routes = () => {
-   const routes = [
-      /// Deshborad
-      { url: "", component: Home },
-      { url: "application", component: Application },
-      { url: "profile", component: Profile },
-      { url: "companies", component: Companies },
-      { url: "search-job", component: SearchJobs },
-      { url: "statistics", component: Statistics },
-      /// Bootstrap
-      { url: "ui-alert", component: UiAlert },
-      { url: "ui-badge", component: UiBadge },
-      { url: "ui-button", component: UiButton },
-      { url: "ui-modal", component: UiModal },
-      { url: "ui-button-group", component: UiButtonGroup },
-      { url: "ui-accordion", component: UiAccordion },
-      { url: "ui-list-group", component: UiListGroup },
-      { url: "ui-media-object", component: UiMediaObject },
-      { url: "ui-card", component: UiCards },
-      { url: "ui-carousel", component: UiCarousel },
-      { url: "ui-dropdown", component: UiDropDown },
-      { url: "ui-popover", component: UiPopOver },
-      { url: "ui-progressbar", component: UiProgressBar },
-      { url: "ui-tab", component: UiTab },
-      { url: "ui-pagination", component: UiPagination },
-      { url: "ui-typography", component: UiTypography },
-      { url: "ui-grid", component: UiGrid },
-      /// Apps
-      { url: "app-profile", component: AppProfile },
-      { url: "email-compose", component: Compose },
-      { url: "email-inbox", component: Inbox },
-      { url: "email-read", component: Read },
-      { url: "app-calender", component: Calendar },
-      /// Shop
-      { url: "ecom-product-grid", component: ProductGrid },
-      { url: "ecom-product-list", component: ProductList },
-      { url: "ecom-product-detail", component: ProductDetail },
-      { url: "ecom-product-order", component: ProductOrder },
-      { url: "ecom-checkout", component: Checkout },
-      { url: "ecom-invoice", component: Invoice },
-      { url: "ecom-product-detail", component: ProductDetail },
-      { url: "ecom-customers", component: Customers },
+  const routes = [
+    /// Deshborad
+    { url: "", component: Home },
+    { url: "application", component: Application },
+    { url: "profile", component: Profile },
+    { url: "companies", component: Companies },
+    { url: "search-job", component: SearchJobs },
+    { url: "statistics", component: Statistics },
+    /// Bootstrap
+    { url: "ui-alert", component: UiAlert },
+    { url: "ui-badge", component: UiBadge },
+    { url: "ui-button", component: UiButton },
+    { url: "ui-modal", component: UiModal },
+    { url: "ui-button-group", component: UiButtonGroup },
+    { url: "ui-accordion", component: UiAccordion },
+    { url: "ui-list-group", component: UiListGroup },
+    { url: "ui-media-object", component: UiMediaObject },
+    { url: "ui-card", component: UiCards },
+    { url: "ui-carousel", component: UiCarousel },
+    { url: "ui-dropdown", component: UiDropDown },
+    { url: "ui-popover", component: UiPopOver },
+    { url: "ui-progressbar", component: UiProgressBar },
+    { url: "ui-tab", component: UiTab },
+    { url: "ui-pagination", component: UiPagination },
+    { url: "ui-typography", component: UiTypography },
+    { url: "ui-grid", component: UiGrid },
+    /// Apps
+    { url: "app-profile", component: AppProfile },
+    { url: "email-compose", component: Compose },
+    { url: "email-inbox", component: Inbox },
+    { url: "email-read", component: Read },
+    { url: "app-calender", component: Calendar },
+    /// Shop
+    { url: "ecom-product-grid", component: ProductGrid },
+    { url: "ecom-product-list", component: ProductList },
+    { url: "ecom-product-detail", component: ProductDetail },
+    { url: "ecom-product-order", component: ProductOrder },
+    { url: "ecom-checkout", component: Checkout },
+    { url: "ecom-invoice", component: Invoice },
+    { url: "ecom-product-detail", component: ProductDetail },
+    { url: "ecom-customers", component: Customers },
 
-      /// Chart
-      { url: "chart-flot", component: ChartChartist },
-      { url: "chart-sparkline", component: SparklineChart },
-      { url: "chart-chartjs", component: ChartJs },
-      { url: "chart-chartist", component: Chartist },
-      { url: "chart-btc", component: BtcChart },
-      { url: "chart-apexchart", component: ApexChart },
-      { url: "chart-rechart", component: RechartJs },
+    /// Chart
+    { url: "chart-flot", component: ChartChartist },
+    { url: "chart-sparkline", component: SparklineChart },
+    { url: "chart-chartjs", component: ChartJs },
+    { url: "chart-chartist", component: Chartist },
+    { url: "chart-btc", component: BtcChart },
+    { url: "chart-apexchart", component: ApexChart },
+    { url: "chart-rechart", component: RechartJs },
 
-      /// table
-      { url: "table-datatable-basic", component: DataTable },
-      { url: "table-bootstrap-basic", component: BootstrapTable },
+    /// table
+    { url: "table-datatable-basic", component: DataTable },
+    { url: "table-bootstrap-basic", component: BootstrapTable },
 
-      /// Widget
-      { url: "widget-basic", component: Widget },
+    /// Widget
+    { url: "widget-basic", component: Widget },
 
-      /// Form
-      { url: "form-element", component: Element },
-      { url: "form-wizard", component: Wizard },
-      { url: "form-wizard", component: Wizard },
-      { url: "form-editor-summernote", component: SummerNote },
-      { url: "form-pickers", component: Pickers },
-      { url: "form-pickers", component: jQueryValidation },
-      { url: "form-validation-jquery", component: Pickers },
+    /// Form
+    { url: "form-element", component: Element },
+    { url: "form-wizard", component: Wizard },
+    { url: "form-wizard", component: Wizard },
+    { url: "form-editor-summernote", component: SummerNote },
+    { url: "form-pickers", component: Pickers },
+    { url: "form-pickers", component: jQueryValidation },
+    { url: "form-validation-jquery", component: Pickers },
 
-      /// Plugin
+    /// Plugin
 
-      { url: "uc-select2", component: Select2 },
-      { url: "uc-nestable", component: Nestable },
-      { url: "uc-noui-slider", component: MainNouiSlider },
-      { url: "uc-sweetalert", component: MainSweetAlert },
-      { url: "uc-toastr", component: Toastr },
-      { url: "map-jqvmap", component: JqvMap },
-   ];
+    { url: "uc-select2", component: Select2 },
+    { url: "uc-nestable", component: Nestable },
+    { url: "uc-noui-slider", component: MainNouiSlider },
+    { url: "uc-sweetalert", component: MainSweetAlert },
+    { url: "uc-toastr", component: Toastr },
+    { url: "map-jqvmap", component: JqvMap },
 
-   return (
-      <Fragment>
-         <Switch>
-            {routes.map((data, i) => (
-               <Route
-                  key={i}
-                  exact
-                  path={`/${data.url}`}
-                  component={data.component}
-               />
-            ))}
-         </Switch>
+    // reports
+   //  { url: "reports", component: Developer },
+   //  { url: "reports", component: Reports},
+  ];
 
-         {/* <Footer /> */}
-      </Fragment>
-   );
+  return (
+    <Fragment>
+      <Switch>
+        {routes.map((data, i) => (
+          <Route
+            key={i}
+            exact
+            path={`/${data.url}`}
+            component={data.component}
+          />
+        ))}
+      </Switch>
+
+      {/* <Footer /> */}
+    </Fragment>
+  );
 };
 
 export default Routes;

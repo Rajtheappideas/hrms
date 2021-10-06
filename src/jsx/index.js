@@ -21,8 +21,6 @@ import Error404 from "./pages/Error404";
 import Error500 from "./pages/Error500";
 import Error503 from "./pages/Error503";
 import ForgotPassword from "./pages/ForgotPassword";
-import Reports from "./pages/Reports";
-// import Developer from "../user/reports/Developer/Developer";
 
 /// Widget
 import Widget from "./pages/Widget";
@@ -98,6 +96,9 @@ import MainSweetAlert from "./components/PluginsMenu/Sweet Alert/SweetAlert";
 import Toastr from "./components/PluginsMenu/Toastr/Toastr";
 import JqvMap from "./components/PluginsMenu/Jqv Map/JqvMap";
 import RechartJs from "./components/charts/rechart";
+
+// reports 
+import DeveloperReport from '../user/reports/Developer/DevloperReport'
 
 const Markup = () => {
    const routes = [
@@ -175,7 +176,6 @@ const Markup = () => {
 		{ url: "map-jqvmap", component: JqvMap },
 
 		/// pages
-		{ url: "reports", component: Reports },
 		{ url: "widget-basic", component: Widget },
 		{ url: "page-register", component: Registration },
 		{ url: "page-lock-screen", component: LockScreen },
@@ -186,8 +186,12 @@ const Markup = () => {
 		{ url: "page-error-500", component: Error500 },
 		{ url: "page-error-503", component: Error503 },
 		{ url: "page-forgot-password", component: ForgotPassword },
-		// { url: "reports", component: Developer },
-   ];
+
+		// reports
+
+		{ url: "reports", component: DeveloperReport },
+
+	];
 
    return (
 		

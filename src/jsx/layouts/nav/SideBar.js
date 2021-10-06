@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import {MdLockOutline} from 'react-icons/md'
 /// Link
 import { Link } from "react-router-dom";
 
@@ -150,6 +150,46 @@ class SideBar extends Component {
                         </li> */}
                      </ul>
                   </li>
+                  <li
+                     className={`${
+                        table.includes(path.slice(1)) ? "mm-active" : ""
+                     }`}
+                  >
+                     <Link
+                        className="has-arrow ai-icon"
+                        to="#"
+                        
+                     >
+                        <i className="flaticon-381-network"></i>
+                        <span className="nav-text">Table</span>
+                     </Link>
+                     <ul >
+                        <li>
+                           <Link to="table-bootstrap-basic">Bootstrap</Link>
+                        </li>
+                        <li>
+                           <Link to="table-datatable-basic">Datatable</Link>
+                        </li>
+                     </ul>
+                  </li>
+                
+                  <li>
+                     <Link
+                        className="has-arrow ai-icon"
+                        to="#"
+                        
+                     >
+                        <MdLockOutline size={30} className="mr-2" />
+                        <span className="nav-text">Authentication</span>
+                     </Link>
+                     <ul >
+                        <li>
+                           <Link to="/page-register">Register</Link>
+                        </li>
+                        <li>
+                           <Link to="/page-login">Login</Link>
+                        </li>
+                        
                   {/* <li
                      className={`${
                         app.includes(path.slice(1)) ? "mm-active" : ""
@@ -417,46 +457,7 @@ class SideBar extends Component {
                      </ul>
                   </li>
                   */}
-                  <li
-                     className={`${
-                        table.includes(path.slice(1)) ? "mm-active" : ""
-                     }`}
-                  >
-                     <Link
-                        className="has-arrow ai-icon"
-                        to="#"
-                        
-                     >
-                        <i className="flaticon-381-network"></i>
-                        <span className="nav-text">Table</span>
-                     </Link>
-                     <ul >
-                        <li>
-                           <Link to="table-bootstrap-basic">Bootstrap</Link>
-                        </li>
-                        <li>
-                           <Link to="table-datatable-basic">Datatable</Link>
-                        </li>
-                     </ul>
-                  </li>
-                
-                  <li>
-                     <Link
-                        className="has-arrow ai-icon"
-                        to="#"
-                        
-                     >
-                        <i className="flaticon-381-layer-1"></i>
-                        <span className="nav-text">Authentication</span>
-                     </Link>
-                     <ul >
-                        <li>
-                           <Link to="/page-register">Register</Link>
-                        </li>
-                        <li>
-                           <Link to="/page-login">Login</Link>
-                        </li>
-                        {/* <li>
+                  {/* <li>
                            <Link
                               className="has-arrow"
                               to="#"

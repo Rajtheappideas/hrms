@@ -15,7 +15,11 @@ import {
   Grid,
   Card,
   CardContent,
+  Select,
+  MenuItem,
+  InputLabel,
 } from "@material-ui/core";
+
 import Container from "@material-ui/core/Container";
 
 // reacticons
@@ -37,8 +41,6 @@ import * as yup from "yup";
 // import { connect } from "react-redux"
 import { Link } from "react-router-dom";
 
-
-
 // phone validation
 const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
@@ -47,6 +49,12 @@ const Registration = () => {
   const [showPassword, setshowPassword] = useState(false);
 
   const navigate = useHistory();
+
+  const dropdownValues = [
+    { key: "Developer", value: "Developer" },
+    { key: "BDM", value: "BDM" },
+    { key: "QA", value: "QA" },
+  ];
   // yup validation
   const RegistrationSchema = yup.object().shape({
     username: yup
@@ -92,7 +100,7 @@ const Registration = () => {
         method: "POST",
         body: JSON.stringify(user),
         headers: {
-          "Accept": "application/json",
+          Accept: "application/json",
           "Content-Type": "application/json",
         },
       })
@@ -179,23 +187,6 @@ const Registration = () => {
                         required
                         fullWidth
                         variant="outlined"
-                        autoComplete="designation"
-                        className="mb-3"
-                        id="designation"
-                        name="designation"
-                        label="Designation"
-                        type="text"
-                        {...getFieldProps("designation")}
-                        error={Boolean(
-                          touched.designation && errors.designation
-                        )}
-                        helperText={touched.designation && errors.designation}
-                      />
-
-                      <TextField
-                        required
-                        fullWidth
-                        variant="outlined"
                         autoComplete="phone"
                         className="mb-3"
                         id="phone"
@@ -235,7 +226,26 @@ const Registration = () => {
                         error={Boolean(touched.password && errors.password)}
                         helperText={touched.password && errors.password}
                       />
-
+                        <InputLabel>Designation</InputLabel>
+                      <Select
+                        fullWidth
+                        required
+                        name="designation"
+                        className="mb-3"
+                        variant="outlined"
+                        
+                        {...getFieldProps("designation")}
+                        error={Boolean(
+                          touched.designation && errors.designation
+                        )}
+                        helperText={touched.designation && errors.designation}
+                      >
+                        {dropdownValues.map((item) => (
+                          <MenuItem key={item.key} value={item.value}>
+                            {item.value}
+                          </MenuItem>
+                        ))}
+                      </Select>
                       <Button
                         fullWidth
                         type="submit"
@@ -271,7 +281,6 @@ const Registration = () => {
                   Sign In
                 </Link>
               </p>
-             
             </div>
           </Container>
         </div>

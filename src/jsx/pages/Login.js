@@ -1,7 +1,7 @@
 import MetaTags from "react-meta-tags";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { v4 as uuidv4, v4 } from "uuid";
+import {  v4 } from "uuid";
 // Redux
 // import { connect } from "react-redux"
 import { withRouter, Link } from "react-router-dom";

@@ -40,6 +40,7 @@ import * as yup from "yup";
 // Redux
 // import { connect } from "react-redux"
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 // phone validation
 const phoneRegExp =
@@ -52,8 +53,9 @@ const Registration = () => {
 
   const dropdownValues = [
     { key: "Developer", value: "Developer" },
-    { key: "BDM", value: "BDM" },
-    { key: "QA", value: "QA" },
+    { key: "Bdm", value: "Bdm" },
+    { key: "Qa", value: "Qa" },
+    { key: "Designer", value: "Designer" },
   ];
   // yup validation
   const RegistrationSchema = yup.object().shape({
@@ -104,14 +106,16 @@ const Registration = () => {
           "Content-Type": "application/json",
         },
       })
+        // console.log(Response.status);
         .then((response) => {
           console.log(response.json());
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err.response.data.message));
       toast.success("Sign up successfully..", {
         type: "success",
       });
       resetForm();
+      navigate.push("/")
       return user;
     },
   });
@@ -226,14 +230,13 @@ const Registration = () => {
                         error={Boolean(touched.password && errors.password)}
                         helperText={touched.password && errors.password}
                       />
-                        <InputLabel>Designation</InputLabel>
+                      <InputLabel>Designation</InputLabel>
                       <Select
                         fullWidth
                         required
                         name="designation"
                         className="mb-3"
                         variant="outlined"
-                        
                         {...getFieldProps("designation")}
                         error={Boolean(
                           touched.designation && errors.designation
@@ -277,7 +280,7 @@ const Registration = () => {
             <div className="mt-3 text-center">
               <p>
                 Already have an account ?
-                <Link to="page-login" className="fw-medium ml-2 text-primary">
+                <Link to="login" className="fw-medium ml-2 text-primary">
                   Sign In
                 </Link>
               </p>

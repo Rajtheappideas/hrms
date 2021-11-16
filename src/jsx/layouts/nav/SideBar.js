@@ -1,5 +1,4 @@
-import React, { Component } from "react";
-import {MdLockOutline} from 'react-icons/md'
+import React, { Component, useContext, useState, useEffect } from "react";
 /// Link
 import { Link } from "react-router-dom";
 
@@ -8,189 +7,187 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 
 /// Menu
 import MetisMenu from "metismenujs";
+// import { UserContext } from "../../../Contexts/UserContext";
+// import { RoleContext } from "../../../Contexts/RoleContext";
+import useToken from "../../../hooks/useToken";
 
 class MM extends Component {
-   componentDidMount() {
-      this.$el = this.el;
-      this.mm = new MetisMenu(this.$el);
-   }
-   componentWillUnmount() {
-      this.mm("dispose");
-   }
-   render() {
-      return (
-         <div className="mm-wrapper">
-            <ul className="metismenu" ref={(el) => (this.el = el)}>
-               {this.props.children}
-            </ul>
-         </div>
-      );
-   }
+  componentDidMount() {
+    this.$el = this.el;
+    this.mm = new MetisMenu(this.$el);
+  }
+  //   componentWillUnmount() {
+  //     this.mm("dispose");
+  //   }
+  render() {
+    return (
+      <div className="mm-wrapper">
+        <ul className="metismenu" ref={(el) => (this.el = el)}>
+          {this.props.children}
+        </ul>
+      </div>
+    );
+  }
 }
 
-class SideBar extends Component {
-   /// Open menu
-   componentDidMount() {
-      // sidebar open/close
-      var btn = document.querySelector(".nav-control");
-      var aaa = document.querySelector("#main-wrapper");
+const SideBar = () => {
+  const { userEmail, userRole, userToken } = useToken();
+  //   const { userRole } = useContext(RoleContext);
+  //   const { currentUser } = useContext(UserContext);
+  //   const [currentuser, setCurrentuser] = useState(null);
+  //   const [userRole, setUserRole] = useState(null);
+  //   console.log("currentuser", currentuser);
+  //   console.log("userRole", userRole);
 
-      function toggleFunc() {
-         return aaa.classList.toggle("menu-toggle");
-      }
+  /// Open menu
+  useEffect(() => {
+    // sidebar open/close
+    var btn = document.querySelector(".nav-control");
+    var aaa = document.querySelector("#main-wrapper");
 
-      btn.addEventListener("click", toggleFunc);
-   }
-   render() {
-      /// Path
-      const path = window.location.pathname;
+    function toggleFunc() {
+      return aaa.classList.toggle("menu-toggle");
+    }
 
-      /// Active menu
-      let deshBoard = [
-            "",
-            "reports",
-            "analytics",
-            "companies",
-            "statistics",
-			
-         ],
-         app = [
-            "app-profile",
-            "app-calender",
-            "email-compose",
-            "email-inbox",
-            "email-read",
-            "ecom-product-grid",
-            "ecom-product-list",
-            "ecom-product-list",
-            "ecom-product-order",
-            "ecom-checkout",
-            "ecom-invoice",
-            "ecom-customers",
-         ],
-         charts = [
-            "chart-morris",
-            "chart-chartjs",
-            "chart-chartist",
-            "chart-sparkline",
-            "chart-peity",
-         ],
-         bootstrap = [
-            "ui-accordion",
-            "ui-badge",
-            "ui-alert",
-            "ui-button",
-            "ui-modal",
-            "ui-button-group",
-            "ui-list-group",
-            "ui-media-object",
-            "ui-card",
-            "ui-carousel",
-            "ui-dropdown",
-            "ui-popover",
-            "ui-progressbar",
-            "ui-tab",
-            "ui-typography",
-            "ui-pagination",
-            "ui-grid",
-         ],
-         plugins = [
-            "uc-select2",
-            "uc-nestable",
-            "uc-sweetalert",
-            "uc-toastr",
-            "uc-jqvmap",
-            "uc-noui-slider",
-         ],
-         widget = ["widget"],
-         forms = [
-            "form-element",
-            "form-wizard",
-            "form-editor-summernote",
-            "form-pickers",
-            "form-validation-jquery",
-         ],
-         table = ["table-bootstrap-basic", "table-datatable-basic"];
+    btn.addEventListener("click", toggleFunc);
+  }, []);
 
-      return (
-         <div className="deznav">
-            <PerfectScrollbar className="deznav-scroll">
-               <MM className="metismenu" id="menu">
-                  <li
-                     className={`${
-                        deshBoard.includes(path.slice(1)) ? "mm-active" : ""
-                     }`}
-                  >
-                     <Link
-                        className="has-arrow ai-icon"
-                        to="#"
-                        
-                     >
-                        <i className="flaticon-381-networking"></i>
-                        <span className="nav-text">Dashboard</span>
-                     </Link>
-                     <ul >
-                        <li>
-                           <Link to="/">Dashboard</Link>
-                        </li>
-                        <li>
-                           <Link to="reports">Send Daily Reports</Link>
-                        </li>
-						{/* <li>
-                           <Link to="review">Review</Link>
-                        </li>
-						<li>
-                           <Link to="order">Order</Link>
-                        </li>
-						<li>
-                           <Link to="order-list">Order List</Link>
-                        </li>
-						<li>
-                           <Link to="customer-list">Customer List</Link>
-                        </li> */}
-                     </ul>
-                  </li>
-                  <li
-                     className={`${
-                        table.includes(path.slice(1)) ? "mm-active" : ""
-                     }`}
-                  >
-                     <Link
-                        className="has-arrow ai-icon"
-                        to="#"
-                        
-                     >
-                        <i className="flaticon-381-network"></i>
-                        <span className="nav-text">Table</span>
-                     </Link>
-                     <ul >
-                        <li>
-                           <Link to="table-bootstrap-basic">Bootstrap</Link>
-                        </li>
-                        <li>
-                           <Link to="table-datatable-basic">Datatable</Link>
-                        </li>
-                     </ul>
-                  </li>
-                
-                  <li>
-                     <Link
-                        className="has-arrow ai-icon"
-                        to="#"
-                        
-                     >
-                        <MdLockOutline size={30} className="mr-2" />
-                        <span className="nav-text">Authentication</span>
-                     </Link>
-                     <ul >
-                        <li>
-                           <Link to="/page-register">Register</Link>
-                        </li>
-                        <li>
-                           <Link to="/page-login">Login</Link>
-                        </li>
-                        
-                  {/* <li
+  useEffect(() => {
+    if (userEmail === "" && userRole === "" && userToken === "") {
+      alert("first login!!!");
+    }
+  }, []);
+  /// Path
+  const path = window.location.pathname;
+
+  /// Active menu
+  let deshBoard = [""],
+    reports = ["DeveloperReport", "BdmReport", "DesignerReport"],
+    auth = ["register", "login"],
+    app = [
+      "app-profile",
+      "app-calender",
+      "email-compose",
+      "email-inbox",
+      "email-read",
+      "ecom-product-grid",
+      "ecom-product-list",
+      "ecom-product-list",
+      "ecom-product-order",
+      "ecom-checkout",
+      "ecom-invoice",
+      "ecom-customers",
+    ],
+    charts = [
+      "chart-morris",
+      "chart-chartjs",
+      "chart-chartist",
+      "chart-sparkline",
+      "chart-peity",
+    ],
+    bootstrap = [
+      "ui-accordion",
+      "ui-badge",
+      "ui-alert",
+      "ui-button",
+      "ui-modal",
+      "ui-button-group",
+      "ui-list-group",
+      "ui-media-object",
+      "ui-card",
+      "ui-carousel",
+      "ui-dropdown",
+      "ui-popover",
+      "ui-progressbar",
+      "ui-tab",
+      "ui-typography",
+      "ui-pagination",
+      "ui-grid",
+    ],
+    plugins = [
+      "uc-select2",
+      "uc-nestable",
+      "uc-sweetalert",
+      "uc-toastr",
+      "uc-jqvmap",
+      "uc-noui-slider",
+    ],
+    widget = ["widget"],
+    forms = [
+      "form-element",
+      "form-wizard",
+      "form-editor-summernote",
+      "form-pickers",
+      "form-validation-jquery",
+    ],
+    table = ["table-bootstrap-basic", "table-datatable-basic"];
+
+  return (
+    <div className="deznav">
+      <PerfectScrollbar className="deznav-scroll">
+        <MM className="metismenu" id="menu">
+          {/* Dashboard */}
+          <li
+            className={`${
+              deshBoard.includes(path.slice(1)) ? "mm-active" : ""
+            }`}
+          >
+            <Link to="/">
+              <i className="flaticon-381-networking"></i>
+              <span className="nav-text">Dashboard</span>
+            </Link>
+          </li>
+
+          {/* report side bar */}
+          {userEmail && userToken ? (
+            <li
+              className={`${
+                reports.includes(path.slice(1)) ? "mm-active" : ""
+              }`}
+            >
+              {userRole === "Developer" ? (
+                <Link to="DeveloperReport">
+                  <i className="flaticon-381-file"></i>
+                  <span className="nav-text">Send Daily Reports</span>
+                </Link>
+              ) : null}
+              {userRole === "Bdm" ? (
+                <Link to="BdmReport">
+                  <i className="flaticon-381-file"></i>
+                  <span className="nav-text">Send Daily Reports</span>
+                </Link>
+              ) : null}
+              {userRole === "Designer" ? (
+                <Link to="DesignerReport">
+                  <i className="flaticon-381-file"></i>
+                  <span className="nav-text">Send Daily Reports</span>
+                </Link>
+              ) : null}
+            </li>
+          ) : null}
+
+          {"userEmail" in localStorage && "token" in localStorage ? null : (
+            <li
+              className={`${auth.includes(path.slice(1)) ? "mm-active" : ""}`}
+            >
+              <Link className="has-arrow ai-icon" to="#">
+                <i className="flaticon-381-lock"></i>
+
+                <span className="nav-text">Authentication</span>
+              </Link>
+              <ul>
+                <li>
+                  <Link to="/register">Register</Link>
+                </li>
+                <li>
+                  <Link to="/login">Login</Link>
+                </li>
+              </ul>
+            </li>
+          )}
+        </MM>
+
+        {/* <li
                      className={`${
                         app.includes(path.slice(1)) ? "mm-active" : ""
                      }`}
@@ -270,7 +267,7 @@ class SideBar extends Component {
                      </ul>
                   </li>
                  */}
-                  {/* <li
+        {/* <li
                      className={`${
                         charts.includes(path.slice(1)) ? "mm-active" : ""
                      }`}
@@ -305,7 +302,7 @@ class SideBar extends Component {
                      </ul>
                   </li>
                  */}
-                  {/* <li
+        {/* <li
                      className={`${
                         bootstrap.includes(path.slice(1)) ? "mm-active" : ""
                      }`}
@@ -373,7 +370,7 @@ class SideBar extends Component {
                      </ul>
                   </li>
                    */}
-                  {/* <li
+        {/* <li
                      className={`${
                         plugins.includes(path.slice(1)) ? "mm-active" : ""
                      }`}
@@ -408,7 +405,7 @@ class SideBar extends Component {
                      </ul>
                   </li>
                    */}
-                  {/* <li
+        {/* <li
                      className={`${
                         widget.includes(path.slice(1)) ? "mm-active" : ""
                      }`}
@@ -423,7 +420,7 @@ class SideBar extends Component {
                      </Link>
                   </li>
                  */}
-                  {/* <li
+        {/* <li
                      className={`${
                         forms.includes(path.slice(1)) ? "mm-active" : ""
                      }`}
@@ -457,7 +454,7 @@ class SideBar extends Component {
                      </ul>
                   </li>
                   */}
-                  {/* <li>
+        {/* <li>
                            <Link
                               className="has-arrow"
                               to="#"
@@ -488,10 +485,10 @@ class SideBar extends Component {
                            <Link to="/page-lock-screen">Lock Screen</Link>
                         </li>
                      */}
-                     </ul>
-                  </li>
-               </MM>
-				{/* <div className="plus-box">
+        {/* </ul>
+          </li>
+        </MM> */}
+        {/* <div className="plus-box">
 					<p className="fs-13 font-w300 mb-4">Organize your menus through button bellow</p>
 					<Link className="btn bg-white text-black btn-rounded d-block" to="#">+Add Menus</Link>
 				</div>
@@ -501,10 +498,9 @@ class SideBar extends Component {
                   </p>
                   <p>by DexignZone</p>
                </div> */}
-            </PerfectScrollbar>
-         </div>
-      );
-   }
-}
+      </PerfectScrollbar>
+    </div>
+  );
+};
 
 export default SideBar;

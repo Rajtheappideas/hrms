@@ -1,10 +1,12 @@
 import MetaTags from "react-meta-tags";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import {  v4 } from "uuid";
-// Redux
+import { v4 } from "uuid";
+import axios from "axios";
+
+import { toast } from "react-toastify";
 // import { connect } from "react-redux"
-import { withRouter, Link } from "react-router-dom";
+import { withRouter, Link, Redirect } from "react-router-dom";
 
 // Formik
 import { FormikProvider, Form, useFormik } from "formik";
@@ -32,14 +34,18 @@ import Container from "@material-ui/core/Container";
 // actions
 // import { loginUser, apiError } from "../../store/actions"
 
-// toastiy
-import { toast, ToastContainer } from "react-toastify";
-
 const Login = () => {
-  const [loggedin, setLoggedin] = useState(false);
   const [showPassword, setshowPassword] = useState(false);
+  const history = useHistory();
 
-  const navigate = useHistory();
+  // const roleBasedRedirect = (userRole) => {
+  //   if (userRole === "react Developer") {
+  //     history.push("DevloperReport");
+  //   } else {
+  //     console.log("nothin...");
+  //   }
+  // };
+
   // yup validation
   const RegistrationSchema = yup.object().shape({
     email: yup.string().email().required("Email is required!"),
@@ -58,31 +64,25 @@ const Login = () => {
         email: values.email,
         password: values.password,
       };
-
-      const response = await fetch("https://hrms-tai.herokuapp.com/login", {
+      const Response = await axios({
         method: "POST",
-        body: JSON.stringify(user),
+        url: "https://hrms-tai.herokuapp.com/login",
+        data: user,
         headers: {
           Accept: "application/json",
           "Content-type": "application/json",
         },
       });
-      if (response.status >= 200 && response.status <= 299) {
-        localStorage.setItem("token", v4());
-        console.log("success");
-      } else {
-        console.log("failure");
-      }
-      const result = response.json();
-      // const status = response.status;
-      console.log(result);
-      // console.log(status);
-      // .then((response) => {
-      //   console.log(response);
-      // })
-      // .catch((err) => console.log(err));
-      // resetForm();
-      // navigate.push("/");
+      // .catch(err => {console.log(err)})
+      const result = Response.data;
+      console.log("result", result);
+      
+      // roleBasedRedirect(userRole);
+      localStorage.setItem("userEmail", JSON.stringify(result?.email));
+      localStorage.setItem("designation", JSON.stringify(result?.designation));
+      localStorage.setItem("token", JSON.stringify(result?.token));
+      resetForm();
+      history.push("/");
       return user;
     },
   });
@@ -184,7 +184,7 @@ const Login = () => {
                         className="mt-2"
                       >
                         {isSubmitting ? (
-                          <CircularProgress color="inherit" size={20} />
+                          <CircularProgress color="inherit" size={20} className="mr-3" />
                         ) : null}
                         Sign In
                       </Button>
@@ -202,7 +202,7 @@ const Login = () => {
             <div className="mt-5 text-center">
               <p>
                 Don&#39;t have an account ?{" "}
-                <Link to="page-register" className="fw-medium text-primary">
+                <Link to="register" className="fw-medium text-primary">
                   {" "}
                   Signup now{" "}
                 </Link>{" "}

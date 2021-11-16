@@ -11,11 +11,15 @@ import profile from "../../../../images/profile/profile.png";
 
 import Lightgallery from './Lightgallery';
 import { Dropdown } from "react-bootstrap";
+import { MetaTags } from "react-meta-tags";
 
 const AppProfile = () => {
    const [activeToggle, setActiveToggle] = useState("posts");
    return (
       <Fragment>
+         <MetaTags>
+         <title>Profile</title>
+         </MetaTags>
          <div className="row page-titles mx-0">
 			<div className="col-sm-6 p-md-0">
 				<div className="welcome-text">

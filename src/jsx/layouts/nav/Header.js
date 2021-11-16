@@ -8,9 +8,10 @@ import profile from "../../../images/profile/12.png";
 import avatar from "../../../images/avatar/1.jpg";
 import { UserContext } from "../../../Contexts/UserContext";
 import { RoleContext } from "../../../Contexts/RoleContext";
+import useToken from "../../../hooks/useToken";
 
 const Header = ({ onNote, toggle, onProfile, onActivity, onNotification }) => {
-  const { setCurrentUser, currentUser } = useContext(UserContext);
+  const { setCurrentUser } = useContext(UserContext);
   const { setUserRole } = useContext(RoleContext);
   var path = window.location.pathname.split("/");
   var name = path[path.length - 1].split("-");
@@ -41,6 +42,11 @@ const Header = ({ onNote, toggle, onProfile, onActivity, onNotification }) => {
 
   var page_name =
     finalName.join(" ") === "" ? "Dashboard" : finalName.join(" ");
+
+  var today = new Date();
+  var curHr = today.getHours();
+
+  const { userEmail, userToken } = useToken();
 
   return (
     <div className="header">
@@ -296,86 +302,41 @@ const Header = ({ onNote, toggle, onProfile, onActivity, onNotification }) => {
                      </li>
                      */}
               {/* ------------------profile dropdown----------- */}
-              <li
-                className={`nav-item dropdown header-profile ${
-                  toggle === "profile" ? "show" : ""
-                }`}
-                onClick={() => onProfile()}
-              >
-                <Link
-                  to={"#"}
-                  className="nav-link"
-                  role="button"
-                  data-toggle="dropdown"
-                >
-                  <div className="header-info">
-                    {/* <small>Good Morning</small> */}
-                    <span>James Sullivan</span>
-                  </div>
-                  <img src={profile} width="20" alt="" />
-                </Link>
-                <div
-                  className={`dropdown-menu dropdown-menu-right ${
+              {userEmail && userToken ? (
+                <li
+                  className={`nav-item dropdown header-profile ${
                     toggle === "profile" ? "show" : ""
                   }`}
+                  onClick={() => onProfile()}
                 >
-                  <Link to="/app-profile" className="dropdown-item ai-icon">
-                    <svg
-                      id="icon-user1"
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="text-primary"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                      <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
-                    <span className="ml-2">Profile </span>
+                  <Link
+                    to={"#"}
+                    className="nav-link"
+                    role="button"
+                    data-toggle="dropdown"
+                  >
+                    <div className="header-info">
+                      {curHr < 12 ? <small>Good Morning</small> : null}
+                      {curHr < 18 ? (
+                        <small>Good Afternoon</small>
+                      ) : (
+                        <small>Good Evening</small>
+                      )}
+
+                      <span>James Sullivan</span>
+                    </div>
+                    <img src={profile} width="20" alt="" />
                   </Link>
-                  <Link to="/email-inbox" className="dropdown-item ai-icon">
-                    <svg
-                      id="icon-inbox"
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="text-success"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                      <polyline points="22,6 12,13 2,6"></polyline>
-                    </svg>
-                    <span className="ml-2">Inbox </span>
-                  </Link>
-                  {"userEmail" in localStorage &&
-                  "token" in localStorage &&
-                  "designation" in localStorage ? (
-                    <Link
-                      to="login"
-                      className="dropdown-item ai-icon"
-                      onClick={() => {
-                        setCurrentUser(null);
-                        setUserRole("");
-                        localStorage.removeItem("token");
-                        localStorage.removeItem("userEmail");
-                        localStorage.removeItem("designation");
-                        window.location.reload();
-                      }}
-                    >
+                  <div
+                    className={`dropdown-menu dropdown-menu-right ${
+                      toggle === "profile" ? "show" : ""
+                    }`}
+                  >
+                    <Link to="/app-profile" className="dropdown-item ai-icon">
                       <svg
-                        id="icon-logout"
+                        id="icon-user1"
                         xmlns="http://www.w3.org/2000/svg"
-                        className="text-danger"
+                        className="text-primary"
                         width="18"
                         height="18"
                         viewBox="0 0 24 24"
@@ -385,15 +346,68 @@ const Header = ({ onNote, toggle, onProfile, onActivity, onNotification }) => {
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       >
-                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                        <polyline points="16 17 21 12 16 7"></polyline>
-                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
                       </svg>
-                      <span className="ml-2">Logout </span>
+                      <span className="ml-2">Profile </span>
                     </Link>
-                  ) : null}
-                </div>
-              </li>
+                    <Link to="/email-inbox" className="dropdown-item ai-icon">
+                      <svg
+                        id="icon-inbox"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="text-success"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                      </svg>
+                      <span className="ml-2">Inbox </span>
+                    </Link>
+                    {"userEmail" in localStorage &&
+                    "token" in localStorage &&
+                    "designation" in localStorage ? (
+                      <Link
+                        className="dropdown-item ai-icon"
+                        onClick={() => {
+                          setCurrentUser(null);
+                          setUserRole("");
+                          localStorage.removeItem("token");
+                          localStorage.removeItem("userEmail");
+                          localStorage.removeItem("designation");
+                          window.location.reload();
+                        }}
+                        to="login"
+                      >
+                        <svg
+                          id="icon-logout"
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="text-danger"
+                          width="18"
+                          height="18"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                          <polyline points="16 17 21 12 16 7"></polyline>
+                          <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+                        <span className="ml-2">Logout </span>
+                      </Link>
+                    ) : null}
+                  </div>
+                </li>
+              ) : null}
             </ul>
           </div>
         </nav>

@@ -103,9 +103,12 @@ import JqvMap from "./components/PluginsMenu/Jqv Map/JqvMap";
 import RechartJs from "./components/charts/rechart";
 
 // reports
-import DeveloperReport from "../user/reports/Developer/DeveloperReport";
-import DesignerReport from "../user/reports/designer/DesignerReport";
-import BdmReport from "../user/reports/bdm/BdmReport";
+import DeveloperReport from "../client/reports/Developer/DeveloperReport";
+import DesignerReport from "../client/reports/designer/DesignerReport";
+import BdmReport from "../client/reports/bdm/BdmReport";
+
+//admin
+// import Navbar from '../admin/Components/Navbar'
 
 import { toast } from "react-toastify";
 import useToken from "../hooks/useToken";
@@ -115,7 +118,7 @@ const Markup = () => {
   const { userEmail, userToken } = useToken();
   const history = useHistory();
 
-  const routes = [
+  const client = [
     /// Deshborad
 
     { url: "/", component: Home },
@@ -215,6 +218,10 @@ const Markup = () => {
     // ];
   ];
 
+  // const admin = [
+  //   {url:"",component:}
+  // ];
+
   return (
     <Router>
       <div id="main-wrapper" className="show">
@@ -224,7 +231,7 @@ const Markup = () => {
             <Switch>
               {/* {userEmail === "" && userToken === ""
                 ? history.push("/")
-                : routes.map((data, i) => (
+                : client.map((data, i) => (
                     <Route
                       key={i}
                       exact
@@ -233,7 +240,7 @@ const Markup = () => {
                     />
                   ))} */}
 
-              {routes.map((data, i) => (
+              {client.map((data, i) => (
                 <Route
                   key={i}
                   exact

@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from "react";
-import MetaTags from "react-meta-tags";
-import "react-toastify/dist/ReactToastify.min.css";
 
-import { useHistory } from "react-router";
-// import axios from "axios"
+
+// =========================================================================
+
+import PropTypes from "prop-types"
+import React, { useState, useEffect } from "react"
+import MetaTags from "react-meta-tags"
+import "react-toastify/dist/ReactToastify.min.css"
+
+import { useHistory } from "react-router"
 
 // material ui
-import CircularProgress from "@material-ui/core/CircularProgress";
+import CircularProgress from "@material-ui/core/CircularProgress"
 import {
   Button,
   TextField,
@@ -15,48 +19,39 @@ import {
   Grid,
   Card,
   CardContent,
-  Select,
-  MenuItem,
-  InputLabel,
-} from "@material-ui/core";
-
-import Container from "@material-ui/core/Container";
+} from "@material-ui/core"
+import Container from "@material-ui/core/Container"
 
 // reacticons
-import { RiEyeOffFill, RiEyeFill } from "react-icons/ri";
-import { FiUserPlus } from "react-icons/fi";
-
+import { RiEyeOffFill, RiEyeFill } from "react-icons/ri"
+import { FiUserPlus } from "react-icons/fi"
 // react toastify
-import { toast, ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify"
 
 // Formik
-import { FormikProvider, Form, useFormik } from "formik";
+import { FormikProvider, Form, useFormik } from "formik"
 
 // yup
-import * as yup from "yup";
+import * as yup from "yup"
 
 // action
 // import { registerUser, apiError, registerUserFailed } from "../../store/actions"
 
 // Redux
-// import { connect } from "react-redux"
-import { Link } from "react-router-dom";
+import { connect } from "react-redux"
+import { Link } from "react-router-dom"
+
+// import images
+// import logoSm from "../../assets/images/logo-sm.png"
 
 // phone validation
 const phoneRegExp =
-  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
 const Registration = () => {
-  const [showPassword, setshowPassword] = useState(false);
-
-  const navigate = useHistory();
-
-  const dropdownValues = [
-    { key: "Developer", value: "Developer" },
-    { key: "Bdm", value: "Bdm" },
-    { key: "Qa", value: "Qa" },
-    { key: "Designer", value: "Designer" },
-  ];
+  const [showPassword, setshowPassword] = useState(false)
+ 
+  const navigate = useHistory()
   // yup validation
   const RegistrationSchema = yup.object().shape({
     username: yup
@@ -77,11 +72,8 @@ const Registration = () => {
       .required("No password provided.")
       .min(8, "Password is too short - should be 8 chars minimum.")
       .matches(/[a-zA-Z]/, "Password can only contain Latin letters."),
-  });
+  })
 
-  useEffect(() => {
-    handleSubmit();
-  }, []);
   // formik values
   const formik = useFormik({
     initialValues: {
@@ -92,44 +84,35 @@ const Registration = () => {
       phone: "",
     },
     validationSchema: RegistrationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async values => {
       const user = {
         email: values.email,
         password: values.password,
         username: values.username,
         phone: values.phone,
         designation: values.designation,
-      };
-
-      await fetch("https://hrms-tai.herokuapp.com/register", {
+      }
+      // ---------for heroku------------
+    //   console.log(user)
+    await fetch("https://hrms-tai.herokuapp.com/register", {
         method: "POST",
         body: JSON.stringify(user),
         headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+          },
       })
-        .then((res) => res.json())
-        .then((json) => {
-          console.log(json);
-          if (json.message) {
-            toast(json.message, { type: "error" });
-          } else {
-            localStorage.setItem("userEmail", JSON.stringify(json?.email));
-            localStorage.setItem(
-              "designation",
-              JSON.stringify(json?.designation)
-            );
-            localStorage.setItem("token", JSON.stringify(json?.token));
-            navigate.push("/");
-          }
-        })
-        .catch((err) => console.log(err));
+      .then(response => {
+          console.log(response.json())
 
-      resetForm();
-      return user;
+      })
+  
+      .catch((err)=>{
+          console.log('err',err)
+      })
+   
     },
-  });
+  })
 
   const {
     errors,
@@ -138,32 +121,27 @@ const Registration = () => {
     handleSubmit,
     isSubmitting,
     getFieldProps,
-  } = formik;
+  } = formik
 
   const containerStyle = {
     padding: "30px 20px",
     width: 400,
     margin: "20px auto",
-  };
+  }
 
   return (
     <React.Fragment>
       <MetaTags>
         <title>Sign Up</title>
       </MetaTags>
-      <ToastContainer
-        position="top-right"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />{" "}
+      <div className="home-btn d-none d-sm-block">
+        <Link to="/" className="text-dark">
+          <i className="fas fa-home h2"></i>
+        </Link>
+      </div>
+      <ToastContainer position="top-center" />
       <Grid>
-        <div className="account-pages">
+        <div className="account-pages pt-sm-5">
           <Container style={containerStyle} component="main">
             <Card className="overflow-hidden">
               <div className="bg-primary">
@@ -172,16 +150,18 @@ const Registration = () => {
                     <FiUserPlus size={30} /> <br />
                     Sign Up
                   </h5>
+                  <div className="logo logo-admin">
+                    {/* <img src={logoSm} height="24" alt="logo" /> */}
+                  </div>
                 </div>
               </div>
               <CardContent className="p-4">
-                <div className="p-2">
-                  <FormikProvider value={formik} className="mt-2">
+                <div className="p-3">
+                  <FormikProvider value={formik} className="mt-4">
                     <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
                       <TextField
                         required
                         fullWidth
-                        variant="outlined"
                         autoComplete="username"
                         className="mb-3"
                         id="username"
@@ -195,7 +175,6 @@ const Registration = () => {
                       <TextField
                         required
                         fullWidth
-                        variant="outlined"
                         autoComplete="email"
                         className="mb-3"
                         id="email"
@@ -210,7 +189,22 @@ const Registration = () => {
                       <TextField
                         required
                         fullWidth
-                        variant="outlined"
+                        autoComplete="designation"
+                        className="mb-3"
+                        id="designation"
+                        name="designation"
+                        label="Designation"
+                        type="text"
+                        {...getFieldProps("designation")}
+                        error={Boolean(
+                          touched.designation && errors.designation
+                        )}
+                        helperText={touched.designation && errors.designation}
+                      />
+
+                      <TextField
+                        required
+                        fullWidth
                         autoComplete="phone"
                         className="mb-3"
                         id="phone"
@@ -225,7 +219,6 @@ const Registration = () => {
                         required
                         fullWidth
                         className="mb-3"
-                        variant="outlined"
                         autoComplete="password"
                         name="password"
                         type={showPassword ? "text" : "password"}
@@ -235,7 +228,7 @@ const Registration = () => {
                           endAdornment: (
                             <InputAdornment position="end">
                               <IconButton
-                                onClick={() => setshowPassword((prev) => !prev)}
+                                onClick={() => setshowPassword(prev => !prev)}
                               >
                                 {showPassword ? (
                                   <RiEyeFill />
@@ -250,39 +243,16 @@ const Registration = () => {
                         error={Boolean(touched.password && errors.password)}
                         helperText={touched.password && errors.password}
                       />
-                      <InputLabel>Designation</InputLabel>
-                      <Select
-                        fullWidth
-                        required
-                        name="designation"
-                        className="mb-3"
-                        variant="outlined"
-                        {...getFieldProps("designation")}
-                        error={Boolean(
-                          touched.designation && errors.designation
-                        )}
-                        // helperText={touched.designation && errors.designation}
-                      >
-                        {dropdownValues.map((item) => (
-                          <MenuItem key={item.key} value={item.value}>
-                            {item.value}
-                          </MenuItem>
-                        ))}
-                      </Select>
+
                       <Button
                         fullWidth
                         type="submit"
                         color="primary"
                         variant="contained"
                         className="mt-2"
+                     
                       >
-                        {isSubmitting ? (
-                          <CircularProgress
-                            color="inherit"
-                            className="mr-3"
-                            size={20}
-                          />
-                        ) : null}
+                      
                         Sign In
                       </Button>
 
@@ -301,19 +271,38 @@ const Registration = () => {
                 </div>
               </CardContent>
             </Card>
-            <div className="mt-3 text-center">
+            <div className="mt-5 text-center">
               <p>
                 Already have an account ?
-                <Link to="login" className="fw-medium ml-2 text-primary">
+                <Link to="/login" className="fw-medium text-primary">
                   Sign In
                 </Link>
               </p>
+            
             </div>
           </Container>
         </div>
       </Grid>
     </React.Fragment>
-  );
-};
+  )
+}
+
+// Register.propTypes = {
+//   registerUser: PropTypes.func,
+//   registerUserFailed: PropTypes.func,
+//   registrationError: PropTypes.any,
+//   user: PropTypes.any,
+// }
+
+const mapStatetoProps = state => {
+  const { user, registrationError, loading } = state.Account
+  return { user, registrationError, loading }
+}
+
+// export default connect(mapStatetoProps, {
+//   registerUser,
+//   apiError,
+//   registerUserFailed,
+// })(Register)
 
 export default Registration;

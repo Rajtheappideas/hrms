@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import InboxMessage from "./InboxMessage";
 import { Dropdown } from "react-bootstrap";
+import { MetaTags } from "react-meta-tags";
 
 const Inbox = () => {
    const Messages = [
@@ -128,6 +129,10 @@ const Inbox = () => {
    ];
    return (
       <Fragment>
+         <MetaTags>
+         <title>Inbox</title>
+         </MetaTags>
+
 		<div className="row page-titles mx-0">
 				<div className="col-sm-6 p-md-0">
 					<div className="welcome-text">

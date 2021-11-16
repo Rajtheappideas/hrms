@@ -1,5 +1,4 @@
 import React, { Fragment, useMemo, useState } from "react";
-import { Redirect } from "react-router-dom";
 
 /// Style
 import "./css/style.css";

@@ -79,8 +79,10 @@ import Toastr from "../components/PluginsMenu/Toastr/Toastr";
 import JqvMap from "../components/PluginsMenu/Jqv Map/JqvMap";
 import RechartJs from "../components/charts/rechart";
 
-import Developer from "../../user/reports/Developer/Developer";
-// import Reports from '../pages/Reports'
+// reports
+import DeveloperReport from "../../user/reports/Developer/DeveloperReport";
+import DesignerReport from "../../user/reports/designer/DesignerReport";
+import BdmReport from "../../user/reports/bdm/BdmReport";
 const Routes = () => {
   const routes = [
     /// Deshborad
@@ -159,12 +161,14 @@ const Routes = () => {
     { url: "map-jqvmap", component: JqvMap },
 
     // reports
-   //  { url: "reports", component: Developer },
-   //  { url: "reports", component: Reports},
+    { url: "BdmReport", component: BdmReport },
+    { url: "DeveloperReport", component: DeveloperReport },
+    { url: "DesignerReport", component: DesignerReport },
   ];
 
   return (
     <Fragment>
+      <Nav />
       <Switch>
         {routes.map((data, i) => (
           <Route
@@ -176,7 +180,7 @@ const Routes = () => {
         ))}
       </Switch>
 
-      {/* <Footer /> */}
+      <Footer />
     </Fragment>
   );
 };

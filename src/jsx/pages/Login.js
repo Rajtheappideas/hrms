@@ -1,12 +1,10 @@
 import MetaTags from "react-meta-tags";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { v4 } from "uuid";
-import axios from "axios";
 
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 // import { connect } from "react-redux"
-import { withRouter, Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // Formik
 import { FormikProvider, Form, useFormik } from "formik";
@@ -38,20 +36,19 @@ const Login = () => {
   const [showPassword, setshowPassword] = useState(false);
   const history = useHistory();
 
-  // const roleBasedRedirect = (userRole) => {
-  //   if (userRole === "react Developer") {
-  //     history.push("DevloperReport");
-  //   } else {
-  //     console.log("nothin...");
-  //   }
-  // };
-
   // yup validation
   const RegistrationSchema = yup.object().shape({
     email: yup.string().email().required("Email is required!"),
     password: yup.string().required("No password provided."),
   });
 
+  useEffect(() => {
+    handleSubmit();
+    console.log(formik);
+    return () => {
+      console.log("cleanup");
+    };
+  }, []);
   // formik values
   const formik = useFormik({
     initialValues: {
@@ -64,25 +61,53 @@ const Login = () => {
         email: values.email,
         password: values.password,
       };
-      const Response = await axios({
+
+      await fetch("https://hrms-tai.herokuapp.com/login", {
         method: "POST",
-        url: "https://hrms-tai.herokuapp.com/login",
-        data: user,
+        body: JSON.stringify(user),
         headers: {
           Accept: "application/json",
-          "Content-type": "application/json",
+          "Content-Type": "application/json",
         },
-      });
-      // .catch(err => {console.log(err)})
-      const result = Response.data;
-      console.log("result", result);
-      
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          console.log(json);
+          if (json.message) {
+            toast(json.message, { type: "error" });
+          } else {
+            localStorage.setItem("userEmail", JSON.stringify(json?.email));
+            localStorage.setItem(
+              "designation",
+              JSON.stringify(json?.designation)
+            );
+            localStorage.setItem("token", JSON.stringify(json?.token));
+            toast(json.message, { type: "success" });
+            history.push("/");
+          }
+        })
+
+        .catch((err) => {
+          console.log(err);
+        });
+
+      // await axios({
+      //   method: "POST",
+      //   url: "https://hrms-tai.herokuapp.com/login",
+      //   data: user,
+      //   headers: {
+      //     Accept: "application/json",
+      //     "Content-type": "application/json",
+      //   },
+      // })
+      //   .then((res) => res.data)
+      //   .then((data) => console.log(data))
+      //   .catch((err) => console.log(err));
       // roleBasedRedirect(userRole);
-      localStorage.setItem("userEmail", JSON.stringify(result?.email));
-      localStorage.setItem("designation", JSON.stringify(result?.designation));
-      localStorage.setItem("token", JSON.stringify(result?.token));
+      // localStorage.setItem("userEmail", JSON.stringify(result?.email));
+      // localStorage.setItem("designation", JSON.stringify(result?.designation));
+      // localStorage.setItem("token", JSON.stringify(result?.token));
       resetForm();
-      history.push("/");
       return user;
     },
   });
@@ -107,7 +132,17 @@ const Login = () => {
       <MetaTags>
         <title>Login</title>
       </MetaTags>
-      {/* <ToastContainer position='top-center'/> */}
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />{" "}
       <Grid>
         <div className="account-pages">
           <Container style={containerStyle} component="main">
@@ -184,7 +219,11 @@ const Login = () => {
                         className="mt-2"
                       >
                         {isSubmitting ? (
-                          <CircularProgress color="inherit" size={20} className="mr-3" />
+                          <CircularProgress
+                            color="inherit"
+                            size={20}
+                            className="mr-3"
+                          />
                         ) : null}
                         Sign In
                       </Button>

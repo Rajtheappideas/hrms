@@ -4,18 +4,9 @@ import { toast } from "react-toastify";
 import { v4 } from "uuid";
 import MetaTags from "react-meta-tags";
 
-import { RoleContext } from "../../../Contexts/RoleContext";
-import { UserContext } from "../../../Contexts/UserContext";
-// import { UserContext } from "../../../Contexts/UserContext";
 import ReportTable from "./ReportTable";
 
 const DeveloperReport = () => {
-  /// context api
-  const { currentUser, setCurrentUser } = useContext(UserContext);
-  const { userRole } = useContext(RoleContext);
-  const click = () => {
-    console.log(userRole);
-  };
   /// states....
   const [reportData, setReportData] = useState([]);
   const [DevReport, setDevReport] = useState({

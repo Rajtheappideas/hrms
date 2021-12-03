@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 
 import { toast, ToastContainer } from "react-toastify";
 // import { connect } from "react-redux"
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 // Formik
 import { FormikProvider, Form, useFormik } from "formik";
@@ -28,11 +28,13 @@ import {
   CardContent,
 } from "@material-ui/core";
 import Container from "@material-ui/core/Container";
-
+import { useUserContext } from "../../context/user_context";
+import useToken from "../../hooks/useToken";
 // actions
 // import { loginUser, apiError } from "../../store/actions"
 
 const Login = () => {
+  const { myUser, setMyUser } = useUserContext();
   const [showPassword, setshowPassword] = useState(false);
   const history = useHistory();
 
@@ -42,13 +44,6 @@ const Login = () => {
     password: yup.string().required("No password provided."),
   });
 
-  useEffect(() => {
-    handleSubmit();
-    console.log(formik);
-    return () => {
-      console.log("cleanup");
-    };
-  }, []);
   // formik values
   const formik = useFormik({
     initialValues: {
@@ -72,6 +67,7 @@ const Login = () => {
       })
         .then((res) => res.json())
         .then((json) => {
+          setMyUser(json);
           console.log(json);
           if (json.message) {
             toast(json.message, { type: "error" });
@@ -108,7 +104,6 @@ const Login = () => {
       // localStorage.setItem("designation", JSON.stringify(result?.designation));
       // localStorage.setItem("token", JSON.stringify(result?.token));
       resetForm();
-      return user;
     },
   });
 

@@ -108,19 +108,37 @@ import DesignerReport from "../client/reports/designer/DesignerReport";
 import BdmReport from "../client/reports/bdm/BdmReport";
 
 //admin
-// import Navbar from '../admin/Components/Navbar'
+import report from "../admin/pages/Dashboard/Report";
+import DailyReportDev from "../admin/pages/DailyReportDev";
+import Employees from "../admin/pages/Employees";
+import navbar from "../admin/Components/Navbar";
+import sidebar from "../admin/Components/Sidebar";
 
 import { toast } from "react-toastify";
 import useToken from "../hooks/useToken";
 import { useHistory } from "react-router";
+import PrivateRoute from "../jsx/pages/PrivateRoute";
+// import SingleReport from "../admin/pages/SingleReport";
 
 const Markup = () => {
-  const { userEmail, userToken } = useToken();
+  const { userEmail, userToken, userRole } = useToken();
   const history = useHistory();
 
   const client = [
-    /// Deshborad
+    /// admin
+    { url: "report", component: report },
+    { url: "employees", component: Employees },
+    { url: "dailyreportdev", component: DailyReportDev },
+    // { url: "dailyreport/:id", component: SingleReport },
+    { url: "index", component: navbar },
+    { url: "sidebar", component: sidebar },
+    // { url: "admin/report", component: report },
+    // { url: "admin/dailyreport", component: DailyReport },
+    // { url: "admin/dailyreport/:id", component: SingleReport },
+    // { url: "admin/index", component: navbar },
+    // { url: "admin/sidebar", component: sidebar },
 
+    /// Deshborad
     { url: "/", component: Home },
     { url: "companies", component: Companies },
     { url: "analytics", component: Analytics },
@@ -198,12 +216,6 @@ const Markup = () => {
     { url: "DeveloperReport", component: DeveloperReport },
     { url: "DesignerReport", component: DesignerReport },
 
-    {
-      path: "login",
-      exact: true,
-      component: () => <Redirect to="login" />,
-    },
-    // const authRoutes = [
     /// pages
     { url: "widget-basic", component: Widget },
     { url: "register", component: Registration },
@@ -211,15 +223,32 @@ const Markup = () => {
     { url: "login", component: Login },
     { url: "page-error-400", component: Error400 },
     { url: "page-error-403", component: Error403 },
-    { url: "page-error-404", component: Error404 },
+    { url: "*", component: Error404 },
     { url: "page-error-500", component: Error500 },
     { url: "page-error-503", component: Error503 },
     { url: "page-forgot-password", component: ForgotPassword },
-    // ];
+
+    //admin
+  ];
+
+  const authRoutes = [
+    { url: "/", component: Home },
+    { url: "widget-basic", component: Widget },
+    { url: "register", component: Registration },
+    { url: "page-lock-screen", component: LockScreen },
+    { url: "login", component: Login },
+    { url: "page-error-400", component: Error400 },
+    { url: "page-error-403", component: Error403 },
+    { url: "*", component: Error404 },
+    { url: "page-error-500", component: Error500 },
+    { url: "page-error-503", component: Error503 },
+    { url: "page-forgot-password", component: ForgotPassword },
   ];
 
   // const admin = [
-  //   {url:"",component:}
+  //   { url: "/", component: report },
+  //   { url: "admin/dailyreport", component: DailyReport },
+  //   { url: "admin/index", component: navbar },
   // ];
 
   return (
@@ -229,25 +258,35 @@ const Markup = () => {
         <div className="content-body">
           <div className="container-fluid">
             <Switch>
-              {/* {userEmail === "" && userToken === ""
-                ? history.push("/")
-                : client.map((data, i) => (
-                    <Route
-                      key={i}
-                      exact
-                      path={`/${data.url}`}
-                      component={data.component}
-                    />
-                  ))} */}
-
-              {client.map((data, i) => (
-                <Route
-                  key={i}
-                  exact
-                  path={`/${data.url}`}
-                  component={data.component}
-                />
-              ))}
+              {
+                (userEmail,
+                userToken
+                  ? client.map((data, i) => (
+                      <PrivateRoute
+                        key={i}
+                        exact
+                        path={`/${data.url}`}
+                        component={data.component}
+                      />
+                    ))
+                  : // : userRole === "Admin"
+                    // ? admin.map((data, i) => (
+                    //     <Route
+                    //       key={i}
+                    //       exact
+                    //       path={`/${data.url}`}
+                    //       component={data.component}
+                    //     />
+                    //   ))
+                    authRoutes.map((data, i) => (
+                      <Route
+                        key={i}
+                        exact
+                        path={`/${data.url}`}
+                        component={data.component}
+                      />
+                    )))
+              }
             </Switch>
           </div>
         </div>

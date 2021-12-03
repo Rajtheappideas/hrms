@@ -56,6 +56,7 @@ const Registration = () => {
     { key: "Bdm", value: "Bdm" },
     { key: "Qa", value: "Qa" },
     { key: "Designer", value: "Designer" },
+    // { key: "Admin", value: "Admin" },
   ];
   // yup validation
   const RegistrationSchema = yup.object().shape({
@@ -79,9 +80,9 @@ const Registration = () => {
       .matches(/[a-zA-Z]/, "Password can only contain Latin letters."),
   });
 
-  useEffect(() => {
-    handleSubmit();
-  }, []);
+  // useEffect(() => {
+  //   handleSubmit();
+  // }, []);
   // formik values
   const formik = useFormik({
     initialValues: {

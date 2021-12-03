@@ -6,13 +6,9 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 /// Image
 import profile from "../../../images/profile/12.png";
 import avatar from "../../../images/avatar/1.jpg";
-import { UserContext } from "../../../Contexts/UserContext";
-import { RoleContext } from "../../../Contexts/RoleContext";
 import useToken from "../../../hooks/useToken";
 
 const Header = ({ onNote, toggle, onProfile, onActivity, onNotification }) => {
-  const { setCurrentUser } = useContext(UserContext);
-  const { setUserRole } = useContext(RoleContext);
   var path = window.location.pathname.split("/");
   var name = path[path.length - 1].split("-");
   var filterName = name.length >= 3 ? name.filter((n, i) => i > 0) : name;
@@ -316,14 +312,22 @@ const Header = ({ onNote, toggle, onProfile, onActivity, onNotification }) => {
                     data-toggle="dropdown"
                   >
                     <div className="header-info">
-                      {curHr < 12 ? <small>Good Morning</small> : null}
-                      {curHr < 18 ? (
-                        <small>Good Afternoon</small>
-                      ) : (
-                        <small>Good Evening</small>
-                      )}
+                      {
+                        curHr < 12 ? (
+                          <small>Good Morning</small>
+                        ) : curHr < 18 ? (
+                          <small>Good Afternoon</small>
+                        ) : (
+                          <small>Good Evening</small>
+                        )
+                        //  {curHr < 18 ? (
+                        //     <small>Good Afternoon</small>
+                        //  ) : (
+                        //     <small>Good Evening</small>
+                        //     )}
+                      }
 
-                      <span>James Sullivan</span>
+                      <span>{userEmail}</span>
                     </div>
                     <img src={profile} width="20" alt="" />
                   </Link>
@@ -376,12 +380,11 @@ const Header = ({ onNote, toggle, onProfile, onActivity, onNotification }) => {
                       <Link
                         className="dropdown-item ai-icon"
                         onClick={() => {
-                          setCurrentUser(null);
-                          setUserRole("");
-                          localStorage.removeItem("token");
-                          localStorage.removeItem("userEmail");
-                          localStorage.removeItem("designation");
-                          window.location.reload();
+                          window.localStorage.clear();
+                          //   window.location.href = "login";
+                          setTimeout(() => {
+                            window.location.reload();
+                          }, 2000);
                         }}
                         to="login"
                       >

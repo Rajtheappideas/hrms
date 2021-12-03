@@ -12,18 +12,9 @@ import { MetaTags } from "react-meta-tags";
 import { toast } from "react-toastify";
 import { v4 } from "uuid";
 import { number } from "yup";
-import { RoleContext } from "../../../Contexts/RoleContext";
-import { UserContext } from "../../../Contexts/UserContext";
 import ReportTable from "./ReportTable";
 
 const DesignerReport = () => {
-  /// context api
-  const { currentUser, setCurrentUser } = useContext(UserContext);
-  const { userRole } = useContext(RoleContext);
-  const click = () => {
-    console.log(userRole);
-  };
-
   /// states....
   const [defaultData, setDefaultData] = useState([
     {
@@ -163,19 +154,24 @@ const DesignerReport = () => {
   };
 
   const handleSubmitDefaultdata = () => {
-    const arr = defaultData.map((item) =>
-      item.taskDesc === "" && item.hourSpent === "" && item.status === ""
-        ? ""
-        : setReportData([...defaultData])
-    );
+    const arr = defaultData.map((item) => {
+      if (item.taskDesc === "" && item.hourSpent === "" && item.status === "") {
+        return setReportData([]);
+      }
+      return setReportData([...defaultData]);
+
+      // item.taskDesc === "" && item.hourSpent === "" && item.status === ""
+      // ? ""
+      // : setReportData([...defaultData])
+    });
 
     if (arr) {
       // toast("All fields should be filled!!!", { type: "warning" });
-      console.log("filled first");
-      return false;
+      toast("you should filled the report first!!!", { type: "error" });
+      // return true;
     } else {
       toast("submiteed");
-      return true;
+      // return true;
     }
   };
 
@@ -191,8 +187,6 @@ const DesignerReport = () => {
     });
     setDefaultData(clear);
   };
-
-  console.log(defaultData);
   return (
     <Fragment>
       <MetaTags>
@@ -216,8 +210,12 @@ const DesignerReport = () => {
             <tbody>
               {defaultData.map((data, index) => (
                 <tr key={data.id}>
-                  <td style={{ fontWeight: "bold" }}>{data.no}</td>
-                  <td style={{ fontWeight: "bold" }}>{data.taskList}</td>
+                  <td style={{ fontWeight: "bold" }} className="text-center">
+                    {data.no}
+                  </td>
+                  <td style={{ fontWeight: "bold" }} className="text-center">
+                    {data.taskList}
+                  </td>
                   <td
                     style={{
                       fontWeight: "bold",
@@ -253,7 +251,6 @@ const DesignerReport = () => {
                       onChange={(e) => {
                         changestatus(e, index);
                       }}
-                      value={defaultData.status}
                       style={{ height: 40, borderRadius: 5 }}
                     >
                       <option defaultValue>Select Task Status</option>
@@ -294,7 +291,7 @@ const DesignerReport = () => {
                     <Form.Control
                       type="text"
                       name="no"
-                      value={designerReport.no}
+                      // value={designerReport.no}
                       onChange={handleInputChange}
                       required
                     />
@@ -308,7 +305,7 @@ const DesignerReport = () => {
                     <Form.Control
                       type="text"
                       name="taskList"
-                      value={designerReport.taskList}
+                      // value={designerReport.taskList}
                       onChange={handleInputChange}
                       required
                     />
@@ -323,7 +320,7 @@ const DesignerReport = () => {
                     <Form.Control
                       type="text"
                       as="textarea"
-                      value={designerReport.taskDesc}
+                      // value={designerReport.taskDesc}
                       style={{ minHeight: 80 }}
                       onChange={handleInputChange}
                       name="taskDesc"
@@ -339,7 +336,7 @@ const DesignerReport = () => {
                     <Form.Control
                       type="number"
                       name="hourSpent"
-                      value={designerReport.hourSpent}
+                      // value={designerReport.hourSpent}
                       onChange={handleInputChange}
                       required
                     />
@@ -354,7 +351,7 @@ const DesignerReport = () => {
                       name="status"
                       required
                       onChange={handleInputChange}
-                      value={designerReport.status}
+                      // value={designerReport.status}
                       style={{ height: 40, borderRadius: 5 }}
                     >
                       <option defaultValue>Select Task Status</option>

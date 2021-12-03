@@ -5,17 +5,9 @@ import { v4 } from "uuid";
 import { number } from "yup";
 import MetaTags from "react-meta-tags";
 
-/// context
-import { RoleContext } from "../../../Contexts/RoleContext";
-import { UserContext } from "../../../Contexts/UserContext";
-
 /// component
 import ReportTable from "./ReportTable";
 const BdmReport = () => {
-  /// context api
-  const { currentUser, setCurrentUser } = useContext(UserContext);
-  const { userRole } = useContext(RoleContext);
-
   /// states....
   const [defaultData, setDefaultData] = useState([
     {

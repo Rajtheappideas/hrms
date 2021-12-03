@@ -7,8 +7,6 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 
 /// Menu
 import MetisMenu from "metismenujs";
-// import { UserContext } from "../../../Contexts/UserContext";
-// import { RoleContext } from "../../../Contexts/RoleContext";
 import useToken from "../../../hooks/useToken";
 import { toast, ToastContainer } from "react-toastify";
 
@@ -33,12 +31,6 @@ class MM extends Component {
 
 const SideBar = () => {
   const { userEmail, userRole, userToken } = useToken();
-  //   const { userRole } = useContext(RoleContext);
-  //   const { currentUser } = useContext(UserContext);
-  //   const [currentuser, setCurrentuser] = useState(null);
-  //   const [userRole, setUserRole] = useState(null);
-  //   console.log("currentuser", currentuser);
-  //   console.log("userRole", userRole);
 
   /// Open menu
   useEffect(() => {
@@ -173,6 +165,34 @@ const SideBar = () => {
                 <Link to="DesignerReport">
                   <i className="flaticon-381-file"></i>
                   <span className="nav-text">Send Daily Reports</span>
+                </Link>
+              ) : null}
+            </li>
+          ) : null}
+          {userEmail && userToken ? (
+            <li
+              className={`${
+                reports.includes(path.slice(1)) ? "mm-active" : ""
+              }`}
+            >
+              {userRole === "Admin" ? (
+                <Link to="dailyreportdev">
+                  <i className="flaticon-381-file"></i>
+                  <span className="nav-text">See Daily Reports</span>
+                </Link>
+              ) : null}
+            </li>
+          ) : null}
+          {userEmail && userToken ? (
+            <li
+              className={`${
+                reports.includes(path.slice(1)) ? "mm-active" : ""
+              }`}
+            >
+              {userRole === "Admin" ? (
+                <Link to="employees">
+                  <i className="flaticon-381-user"></i>
+                  <span className="nav-text">Employees</span>
                 </Link>
               ) : null}
             </li>

@@ -4,28 +4,19 @@ import React, { Fragment, useMemo, useState } from "react";
 import "./css/style.css";
 import "./vendor/bootstrap-select/dist/css/bootstrap-select.min.css";
 
-/// layout
-import Nav from "./jsx/layouts/nav";
-import Footer from "./jsx/layouts/Footer";
-
-// routes
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  useHistory,
-} from "react-router-dom";
-
 /// react-resize
 import { withResizeDetector } from "react-resize-detector";
 
 /// components
-import { routes, authRoutes } from "./jsx";
-import Markup from "./jsx";
+import Routing from "./jsx";
+// import { authRoute, userRoute } from "./jsx";
+// import PrivateRoute from "./jsx/pages/PrivateRoute";
+// import Nav from "./jsx/layouts/nav/NavHader";
+// import Footer from "./jsx/layouts/Footer";
 
 /// context
-import { RoleContext } from "./Contexts/RoleContext";
-import { UserContext } from "./Contexts/UserContext";
+import { UserProvider } from "./context/user_context";
+
 const App = ({ width }) => {
   // const getToken = () => {
   //   const tokenToString = localStorage.getItem("designation");
@@ -34,8 +25,6 @@ const App = ({ width }) => {
   // };
 
   // const history = useHistory();
-  const [currentUser, setCurrentUser] = useState(null);
-  const [userRole, setUserRole] = useState(null);
   // console.log(getToken());
 
   // const value = useMemo(
@@ -55,13 +44,10 @@ const App = ({ width }) => {
     : body.setAttribute("data-sidebar-style", "overlay");
   return (
     <Fragment>
-      <UserContext.Provider value={{ currentUser, setCurrentUser }}>
-        <RoleContext.Provider value={{ userRole, setUserRole }}>
-          <Markup />
-          );
-          {/* {currentUser ? <Markup /> :null} */}
-        </RoleContext.Provider>
-      </UserContext.Provider>
+      <UserProvider>
+        <Routing />
+      </UserProvider>
+      );
     </Fragment>
   );
 };

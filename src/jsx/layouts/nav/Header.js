@@ -382,11 +382,10 @@ const Header = ({ onNote, toggle, onProfile, onActivity, onNotification }) => {
                         onClick={() => {
                           window.localStorage.clear();
                           //   window.location.href = "login";
-                          window.location.reload();
 
-                          //   setTimeout(() => {
-                          //     window.location.reload();
-                          //   }, 2000);
+                          setTimeout(() => {
+                            window.location.reload();
+                          }, 300);
                         }}
                         to="login"
                       >

@@ -109,8 +109,8 @@ import BdmReport from "../client/reports/bdm/BdmReport";
 
 //admin
 import report from "../admin/pages/Dashboard/Report";
-import DailyReportDev from "../admin/pages/DailyReportDev";
-import Employees from "../admin/pages/Employees";
+import DailyReportDev from "../admin/pages/DailyReport/DailyReportDev";
+import Employees from "../admin/pages/employees/Employees";
 import navbar from "../admin/Components/Navbar";
 import sidebar from "../admin/Components/Sidebar";
 
@@ -118,7 +118,7 @@ import { toast } from "react-toastify";
 import useToken from "../hooks/useToken";
 import { useHistory } from "react-router";
 import PrivateRoute from "../jsx/pages/PrivateRoute";
-// import SingleReport from "../admin/pages/SingleReport";
+import SingleEmployee from "../admin/pages/employees/SingleEmployee";
 
 const Markup = () => {
   const { userEmail, userToken, userRole } = useToken();
@@ -128,15 +128,10 @@ const Markup = () => {
     /// admin
     { url: "report", component: report },
     { url: "employees", component: Employees },
+    { url: "employeereport/:id", component: SingleEmployee },
     { url: "dailyreportdev", component: DailyReportDev },
-    // { url: "dailyreport/:id", component: SingleReport },
     { url: "index", component: navbar },
     { url: "sidebar", component: sidebar },
-    // { url: "admin/report", component: report },
-    // { url: "admin/dailyreport", component: DailyReport },
-    // { url: "admin/dailyreport/:id", component: SingleReport },
-    // { url: "admin/index", component: navbar },
-    // { url: "admin/sidebar", component: sidebar },
 
     /// Deshborad
     { url: "/", component: Home },

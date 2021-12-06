@@ -52,10 +52,8 @@ import axios from "axios";
 const Dashboard = ({ authorized }) => {
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState([]);
-  const [menu, setMenu] = useState(false);
-  const toggle = () => {
-    setMenu(!menu);
-  };
+  const [toggle, setToggle] = useState(false);
+
   // const navigate = useHistory()
   // if(!authorized){
   //   return navigate.push("/login")
@@ -74,7 +72,6 @@ const Dashboard = ({ authorized }) => {
   useEffect(() => {
     fetchUsers();
   }, []);
-  console.log(users);
 
   if (loading) {
     return <h1 className="text-center">Loading....</h1>;
@@ -82,6 +79,9 @@ const Dashboard = ({ authorized }) => {
 
   return (
     <React.Fragment>
+      <MetaTags>
+        <title>Employees</title>
+      </MetaTags>
       <div className="page-content">
         <Container fluid>
           {/* <div className="page-title-box">
@@ -107,7 +107,7 @@ const Dashboard = ({ authorized }) => {
                       Total Employee
                     </h5>
                     <h4 className="fw-medium font-size-24 text-light">
-                      {users.length}+{" "}
+                      {users.length}+
                     </h4>
                     {/* <div className="mini-stat-label bg-success">
                       <p className="mb-0">+ 12%</p>
@@ -134,52 +134,77 @@ const Dashboard = ({ authorized }) => {
                           <th scope="col" colSpan="2">
                             Open report
                           </th>
-                          {/* <th scope="col" colSpan="2">
-                            Remove Employee
-                          </th> */}
                         </tr>
                       </thead>
 
                       <tbody>
-                        {users.map((usrname) => (
-                          <>
-                            <tr key={usrname._id}>
-                              <td>
-                                <div className="font-weight-bold">
-                                  {usrname.username}
-                                </div>
-                              </td>
+                        {toggle
+                          ? users.map((user) => (
+                              <tr key={user._id}>
+                                <td>
+                                  <div className="font-weight-bold text-center">
+                                    {user.username}
+                                  </div>
+                                </td>
 
-                              <td>
-                                <span className="badge bg-success text-light">
-                                  {usrname.designation}
-                                </span>
-                              </td>
-                              <td>
-                                <div>
-                                  <Link
-                                    className="btn btn-primary btn-sm"
-                                    to={`dailyreportdev/${usrname.username}`}
+                                <td className=" text-center">
+                                  <span
+                                    className="badge bg-success text-light"
+                                    style={{ fontSize: 12 }}
                                   >
-                                    Open
-                                  </Link>
-                                </div>
-                              </td>
-                              {/* <td>
-                              <div>
-                                <button
-                                  className="btn btn-danger btn-sm"
-                                  onClick={deleteuser}
-                                >
-                                  Remove
-                                </button>
-                              </div>
-                            </td> */}
-                            </tr>
-                          </>
-                        ))}
+                                    {user.designation}
+                                  </span>
+                                </td>
+                                <td>
+                                  <div className="text-center">
+                                    <Link
+                                      className="btn btn-primary btn-sm "
+                                      to={`employeereport/${user.username}`}
+                                    >
+                                      Open
+                                    </Link>
+                                  </div>
+                                </td>
+                              </tr>
+                            ))
+                          : users.slice(0, 10).map((user) => (
+                              <tr key={user._id}>
+                                <td>
+                                  <div className="font-weight-bold text-center">
+                                    {user.username}
+                                  </div>
+                                </td>
+
+                                <td className=" text-center">
+                                  <span
+                                    className="badge bg-success text-light"
+                                    style={{ fontSize: 12 }}
+                                  >
+                                    {user.designation}
+                                  </span>
+                                </td>
+                                <td>
+                                  <div className="text-center">
+                                    <Link
+                                      className="btn btn-primary btn-sm "
+                                      to={`employeereport/${user.username}`}
+                                    >
+                                      Open
+                                    </Link>
+                                  </div>
+                                </td>
+                              </tr>
+                            ))}
                       </tbody>
                     </table>
+                    <div className="text-center">
+                      <button
+                        className="btn btn-primary mt-4"
+                        onClick={() => setToggle(!toggle)}
+                      >
+                        {toggle ? "Show less" : "Show More"}
+                      </button>
+                    </div>{" "}
                   </div>
                 </CardBody>
               </Card>

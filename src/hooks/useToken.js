@@ -6,7 +6,7 @@ const useToken = () => {
   const [userRole, setUserRole] = useState(null);
   const [userToken, setUserToken] = useState(null);
 
-  const history = useHistory()
+  const history = useHistory();
 
   useEffect(() => {
     const useremail = localStorage.getItem("userEmail");
@@ -17,10 +17,8 @@ const useToken = () => {
       setUserRole(JSON.parse(role));
       setUserToken(JSON.parse(token));
     }
-    // else{
-    //   history.push("/")
-    // }
   });
+
   return {
     userEmail,
     userRole,

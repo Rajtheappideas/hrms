@@ -1,6 +1,6 @@
 import React, { Component, useEffect } from "react";
 /// Link
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 /// Scroll
 import PerfectScrollbar from "react-perfect-scrollbar";
@@ -8,8 +8,7 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 /// Menu
 import MetisMenu from "metismenujs";
 import useToken from "../../../hooks/useToken";
-import { toast, ToastContainer } from "react-toastify";
-
+import { ToastContainer } from "react-toastify";
 class MM extends Component {
   componentDidMount() {
     this.$el = this.el;
@@ -46,9 +45,6 @@ const SideBar = () => {
   }, []);
 
   //   useEffect(() => {
-  //     if (userEmail === "" && userRole === "" && userToken === "") {
-  //       alert("first login!!!");
-  //     }
   //   }, []);
   /// Path
   const path = window.location.pathname;
@@ -56,6 +52,8 @@ const SideBar = () => {
   /// Active menu
   let deshBoard = [""],
     reports = ["DeveloperReport", "BdmReport", "DesignerReport"],
+    admin = ["employees"],
+    admin1 = ["see daily reports"],
     auth = ["register", "login"];
   //  app = [
   //    "app-profile",
@@ -131,11 +129,7 @@ const SideBar = () => {
         />{" "}
         <MM className="metismenu" id="menu">
           {/* Dashboard */}
-          <li
-            className={`${
-              deshBoard.includes(path.slice(1)) ? "mm-active" : ""
-            }`}
-          >
+          <li className={`${deshBoard.includes(path.slice(1)) ? "" : ""}`}>
             <Link to="/">
               <i className="flaticon-381-networking"></i>
               <span className="nav-text">Dashboard</span>
@@ -144,37 +138,37 @@ const SideBar = () => {
 
           {/* report side bar */}
           {userEmail && userToken ? (
-            <li
-              className={`${
-                reports.includes(path.slice(1)) ? "mm-active" : ""
-              }`}
-            >
+            <li className={`${reports.includes(path.slice(1)) ? "" : ""}`}>
               {userRole === "Developer" ? (
                 <Link to="DeveloperReport">
                   <i className="flaticon-381-file"></i>
                   <span className="nav-text">Send Daily Reports</span>
                 </Link>
-              ) : null}
+              ) : (
+                <Redirect to="login" />
+              )}
               {userRole === "Bdm" ? (
                 <Link to="BdmReport">
                   <i className="flaticon-381-file"></i>
                   <span className="nav-text">Send Daily Reports</span>
                 </Link>
-              ) : null}
+              ) : (
+                <Redirect to="login" />
+              )}
               {userRole === "Designer" ? (
                 <Link to="DesignerReport">
                   <i className="flaticon-381-file"></i>
                   <span className="nav-text">Send Daily Reports</span>
                 </Link>
-              ) : null}
+              ) : (
+                <Redirect to="login" />
+              )}
             </li>
-          ) : null}
+          ) : (
+            <Redirect to="login" />
+          )}
           {userEmail && userToken ? (
-            <li
-              className={`${
-                reports.includes(path.slice(1)) ? "mm-active" : ""
-              }`}
-            >
+            <li className={`${admin.includes(path.slice(1)) ? "" : ""}`}>
               {userRole === "Admin" ? (
                 <Link to="dailyreportdev">
                   <i className="flaticon-381-file"></i>
@@ -182,13 +176,11 @@ const SideBar = () => {
                 </Link>
               ) : null}
             </li>
-          ) : null}
+          ) : (
+            <Redirect to="login" />
+          )}
           {userEmail && userToken ? (
-            <li
-              className={`${
-                reports.includes(path.slice(1)) ? "mm-active" : ""
-              }`}
-            >
+            <li className={`${admin1.includes(path.slice(1)) ? "" : ""}`}>
               {userRole === "Admin" ? (
                 <Link to="employees">
                   <i className="flaticon-381-user"></i>
@@ -196,12 +188,12 @@ const SideBar = () => {
                 </Link>
               ) : null}
             </li>
-          ) : null}
+          ) : (
+            <Redirect to="login" />
+          )}
 
           {"userEmail" in localStorage && "token" in localStorage ? null : (
-            <li
-              className={`${auth.includes(path.slice(1)) ? "mm-active" : ""}`}
-            >
+            <li className={`${auth.includes(path.slice(1)) ? "" : ""}`}>
               <Link className="has-arrow ai-icon" to="#">
                 <i className="flaticon-381-lock"></i>
 

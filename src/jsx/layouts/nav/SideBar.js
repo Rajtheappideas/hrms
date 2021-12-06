@@ -144,29 +144,25 @@ const SideBar = () => {
                   <i className="flaticon-381-file"></i>
                   <span className="nav-text">Send Daily Reports</span>
                 </Link>
-              ) : (
-                <Redirect to="login" />
-              )}
+              ) : //  <Redirect to="login" />
+              null}
               {userRole === "Bdm" ? (
                 <Link to="BdmReport">
                   <i className="flaticon-381-file"></i>
                   <span className="nav-text">Send Daily Reports</span>
                 </Link>
-              ) : (
-                <Redirect to="login" />
-              )}
+              ) : //  <Redirect to="login" />
+              null}
               {userRole === "Designer" ? (
                 <Link to="DesignerReport">
                   <i className="flaticon-381-file"></i>
                   <span className="nav-text">Send Daily Reports</span>
                 </Link>
-              ) : (
-                <Redirect to="login" />
-              )}
+              ) : //  <Redirect to="login" />
+              null}
             </li>
-          ) : (
-            <Redirect to="login" />
-          )}
+          ) : // <Redirect to="login" />
+          null}
           {userEmail && userToken ? (
             <li className={`${admin.includes(path.slice(1)) ? "" : ""}`}>
               {userRole === "Admin" ? (
@@ -176,9 +172,7 @@ const SideBar = () => {
                 </Link>
               ) : null}
             </li>
-          ) : (
-            <Redirect to="login" />
-          )}
+          ) : null}
           {userEmail && userToken ? (
             <li className={`${admin1.includes(path.slice(1)) ? "" : ""}`}>
               {userRole === "Admin" ? (
@@ -188,9 +182,7 @@ const SideBar = () => {
                 </Link>
               ) : null}
             </li>
-          ) : (
-            <Redirect to="login" />
-          )}
+          ) : null}
 
           {"userEmail" in localStorage && "token" in localStorage ? null : (
             <li className={`${auth.includes(path.slice(1)) ? "" : ""}`}>
